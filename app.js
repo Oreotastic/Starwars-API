@@ -13,12 +13,12 @@ const vehiclesUrl = axios.get('https://star-cors.herokuapp.com/vehicles')
 const allPromise = Promise.all([filmsUrl, peopleUrl, planetsUrl, speciesUrl, starshipsUrl, vehiclesUrl])
 
 const filters = document.querySelectorAll('.filter')
-const films = app.querySelector('.films')
-const people = app.querySelector('.people')
-const planets = app.querySelector('.planets')
-const species = app.querySelector('.species')
-const starships = app.querySelector('.starships')
-const vehicles = app.querySelector('.vehicles')
+const films = app.querySelector('#films')
+const people = app.querySelector('#people')
+const planets = app.querySelector('#planets')
+const species = app.querySelector('#species')
+const starships = app.querySelector('#starships')
+const vehicles = app.querySelector('#vehicles')
 
 
 const grabApi = () => {
@@ -138,14 +138,17 @@ const renderVehicles = (arr) => {
 
 for(let i = 0; i < filters.length; i++){
     filters[i].addEventListener('input', (event) => {
-        const nameList = document.querySelectorAll(`.${event.target.nextElementSibling.className}Name`)
+        
+        const nameList = document.querySelectorAll(`.${event.target.nextElementSibling.id}Name`)
         const nameArr = [...nameList]
-        for(i in nameArr) {
-            if(!(nameArr[i].innerText.indexOf(event.target.value) === 0)) {
-                nameArr[i].parentElement.classList = ('card hide ')
+
+        for(let j in nameArr) {
+            if(!(nameArr[j].innerText.indexOf(event.target.value) === 0)) {
+                
+                nameArr[j].parentElement.classList = ('card hide ')
                 
             } else {
-                nameArr[i].parentElement.classList = ('card display')
+                nameArr[j].parentElement.classList = ('card display')
             }
         }
     })
