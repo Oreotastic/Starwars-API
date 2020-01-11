@@ -8,6 +8,11 @@
     text-align: center;
 }
 
+.containerAlign {
+    text-align: left;
+    padding: 0;
+}
+
 .data {
     display: flex;
     flex-direction: column;
