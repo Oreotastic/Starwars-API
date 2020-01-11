@@ -1,0 +1,32 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+ul {
+    list-style: none;
+}
+
+.card {
+    padding: 20px;
+    text-align: left;
+}
+
+.hide {
+    display: none;
+}
+
+.display {
+    display: flex;
+}
