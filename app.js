@@ -36,13 +36,14 @@ const renderMain = (data, count, id, page) => {
 
     if (typeof count === 'object') {
         for (i = 0; i < 11; i++) {
+
             for (j in data[i]) {
 
                 const headerArr = ['films', 'people', 'planets', 'species', 'starships', 'vehicles']
                 const name = data[i][j][`${Object.keys(data[i][j])[0]}`]
 
                 domArr[i].innerHTML +=
-                    `<li class="card ${headerArr[i]}Title page${page}">
+                `<li class="card dataset ${headerArr[i]}Title page${page}">
                 <b class="${headerArr[i]}Name">${name}</b>
                 </li>`
 
@@ -55,9 +56,11 @@ const renderMain = (data, count, id, page) => {
         renderSpecies(data[3], count[3], page)
         renderStarships(data[4], count[4], page)
         renderVehicles(data[5], count[5], page)
+
     } else {
+
         const domArr = [films, people, planets, species, starships, vehicles]
-        const headerArr = ['films', 'people', 'planets', 'species', 'starships', 'vehicles']
+        
         switch (id) {
             case 'people':
                 peoplePage++
@@ -65,36 +68,75 @@ const renderMain = (data, count, id, page) => {
                 for (i in data) {
                     const name = data[i][`${Object.keys(data[i])[0]}`]
                     el.innerHTML +=
-                        `<li class="card ${id}Title page${peoplePage}">
+                    `<li class="card dataset ${id}Title page${peoplePage}">
                     <b class="${id}Name">${name}</b>
                     </li>`
                 }
 
                 renderPeople(data, count, peoplePage)
                 break;
+
             case 'planets':
                 planetsPage++
-                el = domArr[1]
+                el = domArr[2]
                 for (i in data) {
                     const name = data[i][`${Object.keys(data[i])[0]}`]
                     el.innerHTML +=
-                        `<li class="card ${id}Title page${planetsPage}">
-                            <b class="${id}Name">${name}</b>
-                            </li>`
+                        `<li class="card dataset ${id}Title page${planetsPage}">
+                        <b class="${id}Name">${name}</b>
+                        </li>`
                 }
 
                 renderPlanets(data, count, planetsPage)
                 break;
 
+            case 'species':
+                speciesPage++
+                el = domArr[3]
+                for (i in data) {
+                    const name = data[i][`${Object.keys(data[i])[0]}`]
+                    el.innerHTML +=
+                        `<li class="card dataset ${id}Title page${speciesPage}">
+                        <b class="${id}Name">${name}</b>
+                        </li>`
+                }
 
+                renderSpecies(data, count, speciesPage)
+                break;
+
+            case 'starships':
+                starshipsPage++
+                el = domArr[4]
+                for (i in data) {
+                    const name = data[i][`${Object.keys(data[i])[0]}`]
+                    el.innerHTML +=
+                        `<li class="card dataset ${id}Title page${starshipsPage}">
+                        <b class="${id}Name">${name}</b>
+                        </li>`
+                }
+
+                renderStarships(data, count, starshipsPage)
+                break;
+
+            case 'vehicles':
+                vehiclesPage++
+                el = domArr[5]
+                for (i in data) {
+                    const name = data[i][`${Object.keys(data[i])[0]}`]
+                    el.innerHTML +=
+                    `<li class="card dataset${id}Title page${vehiclesPage}">
+                    <b class="${id}Name">${name}</b>
+                    </li>`
+                }
+
+                renderVehicles(data, count, vehiclesPage)
+                break;
 
         }
     }
-
 }
 
 const renderCount = (el, length, total) => {
-
     el.innerHTML = `viewing ${length} out of ${total}`
 }
 
@@ -122,7 +164,6 @@ const renderPeople = (arr, totalCount, page) => {
     const newList = document.querySelectorAll(`li.card.peopleTitle.page${page}`)
 
     const countEl = newList[0].parentNode.firstElementChild
-    console.dir(countEl)
 
     for (let i = 0; i < newList.length; i++) {
         newList[i].innerHTML +=
@@ -138,13 +179,15 @@ const renderPeople = (arr, totalCount, page) => {
 
 const renderPlanets = (arr, totalCount, page) => {
 
-    const fullList = document.querySelectorAll(`li.card.peopleTitle`).length
-    const newList = document.querySelectorAll('.planetsTitle')
-    const countEl = newList[0].previousElementSibling
+    const fullList = document.querySelectorAll(`li.card.planetsTitle`).length
+    const newList = document.querySelectorAll(`li.card.planetsTitle.page${page}`)
+
+    const countEl = newList[0].parentNode.firstElementChild
 
     for (let i = 0; i < newList.length; i++) {
+        arr
         newList[i].innerHTML +=
-            `<div class="box">
+        `<div class="box">
         <p>Films Appeared: ${arr[i].films.length}</p>
         <p>Climate: ${arr[i].climate}</p>
         </div>`
@@ -153,15 +196,16 @@ const renderPlanets = (arr, totalCount, page) => {
     renderCount(countEl, fullList, totalCount)
 }
 
-const renderSpecies = (arr, totalCount) => {
+const renderSpecies = (arr, totalCount, page) => {
 
-    const fullList = document.querySelectorAll(`li.card.peopleTitle`).length
-    const newList = document.querySelectorAll('.speciesTitle')
-    const countEl = newList[0].previousElementSibling
+    const fullList = document.querySelectorAll(`li.card.speciesTitle`).length
+    const newList = document.querySelectorAll(`li.card.speciesTitle.page${page}`)
+
+    const countEl = newList[0].parentNode.firstElementChild
 
     for (let i = 0; i < newList.length; i++) {
         newList[i].innerHTML +=
-            `<div class="box">
+        `<div class="box">
         <p>Films Appeared: ${arr[i].films.length}</p>
         <p>Average Lifespan: ${arr[i].average_lifespan}</p>
         </div>`
@@ -170,15 +214,16 @@ const renderSpecies = (arr, totalCount) => {
     renderCount(countEl, fullList, totalCount)
 }
 
-const renderStarships = (arr, totalCount) => {
+const renderStarships = (arr, totalCount, page) => {
 
-    const fullList = document.querySelectorAll(`li.card.peopleTitle`).length
-    const newList = document.querySelectorAll('.starshipsTitle')
-    const countEl = newList[0].previousElementSibling
+    const fullList = document.querySelectorAll(`li.card.starshipsTitle`).length
+    const newList = document.querySelectorAll(`li.card.starshipsTitle.page${page}`)
+
+    const countEl = newList[0].parentNode.firstElementChild
 
     for (let i = 0; i < newList.length; i++) {
         newList[i].innerHTML +=
-            `<div class="box">
+        `<div class="box">
         <p>Model: ${arr[i].model}</p>
         <p>Manufacturer: ${arr[i].manufacturer}</p>
         </div>`
@@ -187,15 +232,16 @@ const renderStarships = (arr, totalCount) => {
     renderCount(countEl, fullList, totalCount)
 }
 
-const renderVehicles = (arr, totalCount) => {
+const renderVehicles = (arr, totalCount, page) => {
 
-    const fullList = document.querySelectorAll(`li.card.peopleTitle`).length
-    const newList = document.querySelectorAll('.vehiclesTitle')
-    const countEl = newList[0].previousElementSibling
+    const fullList = document.querySelectorAll(`li.card.vehiclesTitle`).length
+    const newList = document.querySelectorAll(`li.card.vehiclesTitle.page${page}`)
+
+    const countEl = newList[0].parentNode.firstElementChild
 
     for (let i = 0; i < newList.length; i++) {
         newList[i].innerHTML +=
-            `<div class="box">
+        `<div class="box">
         <p>Model: ${arr[i].model}</p>
         <p>Manufacturer: ${arr[i].manufacturer}</p>
         </div>`
@@ -203,22 +249,72 @@ const renderVehicles = (arr, totalCount) => {
 
     renderCount(countEl, fullList, totalCount)
 }
+
+//--------------------------------------------------
 
 const loadMoreAPI = (id) => {
-    axios.get(`https://star-cors.herokuapp.com/${id}`)
-        .then(response => response)
-        .then(({
-            data
-        }) => data.next)
-        .then(url => {
-            axios.get(url)
+
+    switch (id) {
+        case 'people':
+            axios.get(`https://star-cors.herokuapp.com/${id}/?page=${peoplePage}`)
                 .then(response => response)
-                .then(({
-                    data
-                }) => {
-                    renderMain(data.results, data.count, id)
+                .then(({data}) => data.next)
+                .then(url => {
+                    axios.get(url)
+                        .then(response => response)
+                        .then(({data}) => {
+                            renderMain(data.results, data.count, id)
+                        })
                 })
-        })
+            break;
+        case 'planets':
+            axios.get(`https://star-cors.herokuapp.com/${id}/?page=${planetsPage}`)
+                .then(response => response)
+                .then(({data}) => data.next)
+                .then(url => {
+                    axios.get(url)
+                        .then(response => response)
+                        .then(({data}) => {
+                            renderMain(data.results, data.count, id)
+                        })
+                })
+            break;
+        case 'species':
+            axios.get(`https://star-cors.herokuapp.com/${id}/?page=${speciesPage}`)
+                .then(response => response)
+                .then(({data}) => data.next)
+                .then(url => {
+                    axios.get(url)
+                        .then(response => response)
+                        .then(({data}) => {
+                            renderMain(data.results, data.count, id)
+                        })
+                })
+            break;
+        case 'starships':
+            axios.get(`https://star-cors.herokuapp.com/${id}/?page=${starshipsPage}`)
+                .then(response => response)
+                .then(({data}) => data.next)
+                .then(url => {
+                    axios.get(url)
+                        .then(response => response)
+                        .then(({data}) => {
+                            renderMain(data.results, data.count, id)
+                        })
+                })
+            break;
+        case 'vehicles':
+            axios.get(`https://star-cors.herokuapp.com/${id}/?page=${vehiclesPage}`)
+                .then(response => response)
+                .then(({data}) => data.next)
+                .then(url => {
+                    axios.get(url)
+                        .then(response => response)
+                        .then(({data}) => {
+                            renderMain(data.results, data.count, id)
+                        })
+                })
+    }
 }
 
 const loadMore = () => {
@@ -235,8 +331,8 @@ const addFilters = () => {
     for (let i = 0; i < filters.length; i++) {
 
         filters[i].addEventListener('input', (event) => {
-
-            const nameList = document.querySelectorAll(`.${event.target.nextElementSibling.id}Name`)
+            
+            const nameList = event.target.parentElement.parentElement.querySelectorAll('b')
             const nameArr = [...nameList]
 
             for (let j in nameArr) {
@@ -245,7 +341,7 @@ const addFilters = () => {
                     nameArr[j].parentElement.classList = ('card hide ')
 
                 } else {
-                    nameArr[j].parentElement.classList = ('card display')
+                    nameArr[j].parentElement.classList = ('card display dataset')
                 }
             }
         })
